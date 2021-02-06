@@ -10,6 +10,12 @@ $(document).ready(function() {
 	function montarLivro(livro){
 		console.log(livro);
 		let volumeInfo = livro.volumeInfo;
+		let nomesAuthors='';
+		let authors = volumeInfo.authors;
+		$.each(authors, function(i, nome) {
+			nomesAuthors+=nome+', ';
+		});
+		nomesAuthors=nomesAuthors.substring(0,nomesAuthors.length-2)
 		let image = volumeInfo.imageLinks.thumbnail;
 		let title = volumeInfo.title;
 		if(title.length > 80){
@@ -28,6 +34,7 @@ $(document).ready(function() {
 		objeto += `<img src="${image}" alt="${title}">`;
 		objeto += '<div class="caption">';
 		objeto += `<h3>${title}</h3>`;
+		objeto += `<p><strong>${nomesAuthors}</strong></p>`;
 		objeto += `<p>${description}</p>`;
 		objeto += '<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>';
 		objeto += '</div></div></div>';
