@@ -9,7 +9,7 @@ $(document).ready(function() {
 	
 	function montarLivro(livro){
 		let volumeInfo = livro.volumeInfo;
-		let preview = livro.accessInfo.webReaderLink;
+		let preview = volumeInfo.previewLink;
 		let nomesAuthors='';
 		let authors = volumeInfo.authors;
 		$.each(authors, function(i, nome) {
@@ -36,8 +36,8 @@ $(document).ready(function() {
 		objeto += `<h3>${title}</h3>`;
 		objeto += `<p><strong>${nomesAuthors}</strong></p>`;
 		objeto += `<p>${description}</p>`;
-		objeto += '<p><a href="#" class="btn btn-primary" role="button">Button</a> ';
-		objeto += `<a href="${preview}" class="btn btn-default" role="button" target="_blank">Previa</a></p>`;
+		objeto += '<p><a href="#" class="btn btn-primary" role="button">Favorito</a> ';
+		objeto += `<a href="${preview}" class="btn btn-default" role="button" target="_blank">Prévia</a></p>`;
 		objeto += '</div></div></div>';
 		return objeto;
 	};
@@ -47,22 +47,31 @@ $(document).ready(function() {
 	$('#btnLocalizar').click(function() {
 		event.preventDefault();
 		let texto = $('#txtLocalizar').val();
+		
 		if (!texto) {
 			alertar('É preciso informar um título de livro ou nome de autor');
 			return;
 		}
 		$("#aviso").remove();
+		let listaParametros = texto.split(" ");
 		
+		let saida = '';
+		$.each(listaParametros, function(i, palavra) {
+			saida+=palavra+'+';
+		});
+		saida=saida.substring(0,saida.length-1);
 		$.ajax({
 			type : "GET",
-			url : `/api/pesquisar/${texto}`,
+			url : `/api/pesquisar/${saida}`,
 			data : '$format=json',
 			dataType : 'json',
 			success : function(data) {
-					$("#dadosPesquisa").text(`Encontrados ${data.items.length} livros.`);
+					let total = 0;
 					$.each(data.items, function(i, livro) {
 						$('#divLinha').append(montarLivro(livro));
+						total++;
 					});
+					$("#dadosPesquisa").text(`Encontrados ${total} livros.`);
 			}
 			});
 	});
