@@ -14,8 +14,24 @@ Abrir um terminal, selecionar uma pasta e usar o comando abaixo:
 
 `git clone git@github.com:jairmaiag/googlebooks.git`
 
+# Compilando
+
+Acesse a pasta **googlebooks** pelo terminal e digite o comando:
+
+`mvn clean install -DskipTests`
+
+Para que o mesmo possa ser compilado. Na primeira vez que esse comando for executado o Maven vai baixar várias depedências e isso pode demorar um pouco.
+
+
 # Executar
 
-Após baixar o projeto, acesse a pasta **googlebooks** pelo terminal de comandos e execute o comando abaixo:
+Uma vez o projeto compilado, ainda no terminal e na pasta do projeto, execute o comando abaixo:
 
 `mvn spring-boot:run`
+
+# Utilizar
+
+Com o projeto rodando, abra seu navegador e acesse o caminho:
+
+http://localhost:8080
+
