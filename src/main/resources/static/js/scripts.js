@@ -8,8 +8,8 @@ $(document).ready(function() {
 	};
 	
 	function montarLivro(livro){
-		console.log(livro);
 		let volumeInfo = livro.volumeInfo;
+		let preview = livro.accessInfo.webReaderLink;
 		let nomesAuthors='';
 		let authors = volumeInfo.authors;
 		$.each(authors, function(i, nome) {
@@ -31,12 +31,13 @@ $(document).ready(function() {
 		}
 		let objeto = `<div class="col-sm-6 col-md-4">`;
 		objeto += '<div class="thumbnail">';
-		objeto += `<img src="${image}" alt="${title}">`;
+		objeto += `<a href="${preview}" target="_blank"><img src="${image}" alt="${title}" width="128" height="182"></a>`;
 		objeto += '<div class="caption">';
 		objeto += `<h3>${title}</h3>`;
 		objeto += `<p><strong>${nomesAuthors}</strong></p>`;
 		objeto += `<p>${description}</p>`;
-		objeto += '<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>';
+		objeto += '<p><a href="#" class="btn btn-primary" role="button">Button</a> ';
+		objeto += `<a href="${preview}" class="btn btn-default" role="button" target="_blank">Previa</a></p>`;
 		objeto += '</div></div></div>';
 		return objeto;
 	};
