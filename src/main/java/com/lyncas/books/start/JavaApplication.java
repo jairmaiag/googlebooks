@@ -7,7 +7,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.lyncas.books.controller"})
+@ComponentScan(basePackages = {"com.lyncas.books"})
 public class JavaApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

@@ -6,28 +6,32 @@ $(document).ready(function() {
 		caixa += '</div>';
 		$('#alertas').append(caixa);
 	};
-	
-	function montarLivro(livro){
+
+	function montarLivro(livro) {
+		console.log(livro);
 		let volumeInfo = livro.volumeInfo;
 		let preview = volumeInfo.previewLink;
-		let nomesAuthors='';
+		let nomesAuthors = '';
 		let authors = volumeInfo.authors;
 		$.each(authors, function(i, nome) {
-			nomesAuthors+=nome+', ';
+			nomesAuthors += nome + ', ';
 		});
-		nomesAuthors=nomesAuthors.substring(0,nomesAuthors.length-2)
-		let image = volumeInfo.imageLinks.thumbnail;
+		nomesAuthors = nomesAuthors.substring(0, nomesAuthors.length - 2)
+		let image='';
+		if(volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail){
+			image = volumeInfo.imageLinks.thumbnail;
+		}
 		let title = volumeInfo.title;
-		if(title.length > 80){
-			title = title.substring(0,80)+' ...';
+		if (title.length > 80) {
+			title = title.substring(0, 80) + ' ...';
 		}
 		let description = volumeInfo.description;
-		if(description){
-			if(description.length > 160){
-				description = description.substring(0,150)+' ...';
+		if (description) {
+			if (description.length > 160) {
+				description = description.substring(0, 150) + ' ...';
 			}
-		}else{
-			description='Livro sem descrição';
+		} else {
+			description = 'Livro sem descrição';
 		}
 		let objeto = `<div class="col-sm-6 col-md-4">`;
 		objeto += '<div class="thumbnail">';
@@ -42,37 +46,37 @@ $(document).ready(function() {
 		return objeto;
 	};
 	$('#btnLimpar').click(function() {
-	
+
 	});
 	$('#btnLocalizar').click(function() {
 		event.preventDefault();
 		let texto = $('#txtLocalizar').val();
-		
+
 		if (!texto) {
 			alertar('É preciso informar um título de livro ou nome de autor');
 			return;
 		}
 		$("#aviso").remove();
 		let listaParametros = texto.split(" ");
-		
+
 		let saida = '';
 		$.each(listaParametros, function(i, palavra) {
-			saida+=palavra+'+';
+			saida += palavra + '+';
 		});
-		saida=saida.substring(0,saida.length-1);
+		saida = saida.substring(0, saida.length - 1);
 		$.ajax({
-			type : "GET",
-			url : `/api/pesquisar/${saida}`,
-			data : '$format=json',
-			dataType : 'json',
-			success : function(data) {
-					let total = 0;
-					$.each(data.items, function(i, livro) {
-						$('#divLinha').append(montarLivro(livro));
-						total++;
-					});
-					$("#dadosPesquisa").text(`Encontrados ${total} livros.`);
+			type: "GET",
+			url: `/api/pesquisar/${saida}`,
+			data: '$format=json',
+			dataType: 'json',
+			success: function(data) {
+				let total = 0;
+				$.each(data.items, function(i, livro) {
+					$('#divLinha').append(montarLivro(livro));
+					total++;
+				});
+				$("#dadosPesquisa").text(`Encontrados ${total} livros.`);
 			}
-			});
+		});
 	});
 });
