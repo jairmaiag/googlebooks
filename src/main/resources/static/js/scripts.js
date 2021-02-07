@@ -45,10 +45,13 @@ $(document).ready(function() {
 		objeto += '</div></div></div>';
 		return objeto;
 	};
+	function listarFavoritos(){
+		console.log('Chamado a listagem');
+	}
 	$('#btnLimpar').click(function() {
 
 	});
-	$('#btnLocalizar').click(function() {
+	$('#btnLocalizar').click(function(event) {
 		event.preventDefault();
 		let texto = $('#txtLocalizar').val();
 

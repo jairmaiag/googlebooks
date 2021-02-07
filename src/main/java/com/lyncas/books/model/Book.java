@@ -18,4 +18,21 @@ public class Book {
 	@NotNull
 	@Length(min=2, max=12,message="O tamanho do nome deve ser entre {min} e {max} caracteres")
 	private String idBook;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getIdBook() {
+		return idBook;
+	}
+
+	public void setIdBook(String idBook) {
+		this.idBook = idBook;
+	}
+		
 }
