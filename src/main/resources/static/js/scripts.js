@@ -1,4 +1,19 @@
-function montarLivro(livro,favorito) {
+function adicionarFavorito(id){
+	let favorito = $.ajax({
+		type: "POST",
+		url:`/api/favoritos`,
+		data: JSON.stringify({idBook : `${id}`}),
+		contentType:'application/json; charset=UTF-8',
+		dataType:"json"
+	}).done(function( livro ) {
+		if(livro.idBook !== "Cadastrado"){
+			$(`#${livro.idBook}`).hide("slow");
+		}
+	});
+};
+
+function montarLivro(livro, favorito) {
+	let idBook = livro.id;
 	let volumeInfo = livro.volumeInfo;
 	let preview = volumeInfo.previewLink;
 	let nomesAuthors = '';
@@ -12,7 +27,7 @@ function montarLivro(livro,favorito) {
 		image = volumeInfo.imageLinks.thumbnail;
 	}
 	let title = volumeInfo.title;
-	if (title.length > 80) {
+	if (title && title.length > 80) {
 		title = title.substring(0, 80) + ' ...';
 	}
 	let description = volumeInfo.description;
@@ -24,7 +39,7 @@ function montarLivro(livro,favorito) {
 		description = 'Livro sem descrição';
 	}
 	let textoFavorito = favorito ? 'Remover':'Favorito';
-	let objeto = `<div class="col-sm-6 col-md-4" style="width: 20rem; height: 500px;">`;
+	let objeto = `<div class="col-sm-6 col-md-4" style="width: 20rem; height: 500px;" id="${idBook}">`;
 	objeto += '<div class="card" style="width: 18rem;">';
 	objeto += `<a href="${preview}" target="_blank">`;
 	objeto += `<img class="card-img-top" src="${image}" alt="${title}" style="height: 180px; width: 100%; display: block;"></a>`;
@@ -32,11 +47,12 @@ function montarLivro(livro,favorito) {
 	objeto += `<h5 class="card-title">${title}</h5>`;
 	objeto += `<h6 class="card-subtitle mb-2 text-muted">${nomesAuthors}</h6>`;
 	objeto += `<p class="card-text">${description}</p>`;
-	objeto += `<a href="#" class="btn btn-primary mr-2" role="button">${textoFavorito}</a>`;
+	objeto += `<button type="button" onclick="adicionarFavorito('${idBook}')" class="btn btn-primary mr-2" role="button">${textoFavorito}</button>`;
 	objeto += `<a href="${preview}" class="btn btn-info" role="button" target="_blank">Prévia</a>`;
 	objeto += '</div></div></div>';
 	return objeto;
 };
+
 function alertar(textoAviso) {
 	let caixa = '<div class="alert alert-danger" role="alert" id="aviso">';
 	caixa += '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
