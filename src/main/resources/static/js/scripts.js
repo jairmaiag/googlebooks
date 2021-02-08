@@ -12,6 +12,28 @@ function adicionarFavorito(id){
 	});
 };
 
+function removerFavorito(id){
+	$.ajax({
+		type: "DELETE",
+		url:`/api/favoritos/${id}`,
+		contentType:'application/json; charset=UTF-8',
+		dataType:"json"
+	}).done(function( livro ) {
+		$(`#${id}`).hide("slow");
+	});
+};
+
+$('#confirmarExclusao').on('show.bs.modal', function (event) {
+	let origem = $(event.relatedTarget);
+	let id = origem.data('id');
+	let titulo =origem.data('titulo'); 
+	let modal = $(this);
+	modal.find('#tiuloExcluir').text(titulo);
+	$('#btnRemover').click(function(e){
+		removerFavorito(id);
+	});
+});
+
 function montarLivro(livro, favorito) {
 	let idBook = livro.id;
 	let volumeInfo = livro.volumeInfo;
@@ -38,7 +60,13 @@ function montarLivro(livro, favorito) {
 	} else {
 		description = 'Livro sem descrição';
 	}
-	let textoFavorito = favorito ? 'Remover':'Favorito';
+	let textoFavorito = 'Favorito';
+	let tipoBotao = `onclick="adicionarFavorito('${idBook}')" class="btn btn-primary mr-2"`   
+	if(favorito){
+		textoFavorito='Remover';
+		tipoBotao='btn-danger';
+		tipoBotao=`data-toggle="modal" data-target="#confirmarExclusao" class="btn btn-danger mr-2`;
+	}
 	let objeto = `<div class="col-sm-6 col-md-4" style="width: 20rem; height: 500px;" id="${idBook}">`;
 	objeto += '<div class="card" style="width: 18rem;">';
 	objeto += `<a href="${preview}" target="_blank">`;
@@ -47,7 +75,7 @@ function montarLivro(livro, favorito) {
 	objeto += `<h5 class="card-title">${title}</h5>`;
 	objeto += `<h6 class="card-subtitle mb-2 text-muted">${nomesAuthors}</h6>`;
 	objeto += `<p class="card-text">${description}</p>`;
-	objeto += `<button type="button" onclick="adicionarFavorito('${idBook}')" class="btn btn-primary mr-2" role="button">${textoFavorito}</button>`;
+	objeto += `<button type="button" data-id="${idBook}" data-titulo="${title}"  ${tipoBotao} role="button">${textoFavorito}</button>`;
 	objeto += `<a href="${preview}" class="btn btn-info" role="button" target="_blank">Prévia</a>`;
 	objeto += '</div></div></div>';
 	return objeto;
@@ -89,10 +117,17 @@ $(document).ready(function() {
 			success: function(data) {
 				let total = 0;
 				$.each(data.items, function(i, livro) {
-					$('#divLinha').append(montarLivro(livro));
-					total++;
+					$.ajax({
+						type: "GET",
+						url: `/api/favoritos/${livro.id}`,
+						data: '$format=json',
+						dataType: 'json',
+					}).fail(function( jqXHR, textStatus ) {
+						$('#divLinha').append(montarLivro(livro));
+					});
+					//total++;
 				});
-				$("#dadosPesquisa").text(`Encontrados ${total} livros.`);
+				//$("#dadosPesquisa").text(`Encontrados ${total} livros.`);
 			}
 		});
 	});
