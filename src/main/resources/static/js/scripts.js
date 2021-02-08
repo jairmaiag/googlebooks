@@ -1,5 +1,4 @@
-function montarLivro(livro) {
-	console.log(livro);
+function montarLivro(livro,favorito) {
 	let volumeInfo = livro.volumeInfo;
 	let preview = volumeInfo.previewLink;
 	let nomesAuthors = '';
@@ -19,20 +18,22 @@ function montarLivro(livro) {
 	let description = volumeInfo.description;
 	if (description) {
 		if (description.length > 160) {
-			description = description.substring(0, 150) + ' ...';
+			description = description.substring(0, 150) + '...';
 		}
 	} else {
 		description = 'Livro sem descrição';
 	}
-	let objeto = `<div class="col-sm-6 col-md-4">`;
-	objeto += '<div class="thumbnail">';
-	objeto += `<a href="${preview}" target="_blank"><img src="${image}" alt="${title}" width="128" height="182"></a>`;
-	objeto += '<div class="caption">';
-	objeto += `<h3>${title}</h3>`;
-	objeto += `<p><strong>${nomesAuthors}</strong></p>`;
-	objeto += `<p>${description}</p>`;
-	objeto += '<p><a href="#" class="btn btn-primary" role="button">Favorito</a> ';
-	objeto += `<a href="${preview}" class="btn btn-default" role="button" target="_blank">Prévia</a></p>`;
+	let textoFavorito = favorito ? 'Remover':'Favorito';
+	let objeto = `<div class="col-sm-6 col-md-4" style="width: 20rem; height: 500px;">`;
+	objeto += '<div class="card" style="width: 18rem;">';
+	objeto += `<a href="${preview}" target="_blank">`;
+	objeto += `<img class="card-img-top" src="${image}" alt="${title}" style="height: 180px; width: 100%; display: block;"></a>`;
+	objeto += `<div class="card-body">`
+	objeto += `<h5 class="card-title">${title}</h5>`;
+	objeto += `<h6 class="card-subtitle mb-2 text-muted">${nomesAuthors}</h6>`;
+	objeto += `<p class="card-text">${description}</p>`;
+	objeto += `<a href="#" class="btn btn-primary mr-2" role="button">${textoFavorito}</a>`;
+	objeto += `<a href="${preview}" class="btn btn-info" role="button" target="_blank">Prévia</a>`;
 	objeto += '</div></div></div>';
 	return objeto;
 };
