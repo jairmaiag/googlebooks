@@ -50,3 +50,15 @@ Para cadastrar um book nos favoritos, utilize o método **POST** com o endereço
 Passando no corpo o objeto json:
 
 `{"idBook":"-JkDEAAAQBAA"}`
+
+## Excluido um favorito
+Para excluir um book dos favoritos, utilize o método **DELETE** com o endereço:
+
+[http://localhost:8080/api/favoritos/{idBook}](http://localhost:8080/api/favoritos/{idBook})
+
+Onde {idBook} é o id do book cadastrado.
+
+Exemplo:
+
+[http://localhost:8080/api/favoritos/-JkDEAAAQBAA](http://localhost:8080/api/favoritos/-JkDEAAAQBAA)
+
