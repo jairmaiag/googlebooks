@@ -35,3 +35,18 @@ Com o projeto rodando, abra seu navegador e acesse o caminho:
 
 http://localhost:8080
 
+# Utilizando a API
+
+## Listando os favoritos
+Para listar os books cadastrados nos favoritos, utilize o método **GET** com o endereço:
+
+[http://localhost:8080/api/favoritos](http://localhost:8080/api/favoritos)
+
+## Cadastrando um favorito
+Para cadastrar um book nos favoritos, utilize o método **POST** com o endereço:
+
+[http://localhost:8080/api/favoritos](http://localhost:8080/api/favoritos)
+
+Passando no corpo o objeto json:
+
+`{"idBook":"-JkDEAAAQBAA"}`
