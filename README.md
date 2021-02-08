@@ -71,4 +71,18 @@ Utilize um navegador (browser) para utilizar a interface gráfica do sistema, ac
 
 [http://localhost:8080](http://localhost:8080)
 
+Se a lista de favoritos estiver vazia uma alerta será exibido, como na imagem abaixo:
+
 ![](/src/resources/tela01.png)
+
+Ao clicar no menu Pesquisar a tela com as instruções será como na imagem abaixo:
+
+![](/src/resources/tela02.png)
+
+Digitando um título de livro ou autor(a) e clicando no botão pesquisar, o resultado será exibido como na imagem abaixo:
+
+![](/src/resources/tela03.png)
+
+Ao retornar para o menu de Favoritos será possível excluir um título como na imagem abaixo:
+
+![](/src/resources/tela04.png)
