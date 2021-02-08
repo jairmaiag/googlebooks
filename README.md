@@ -15,6 +15,8 @@ Ter os programas, abaixo, instalados e executando:
 1. Git
 2. Java 11
 3. Maven
+4. Bootstrap 4.0.0
+5. jQuery 3.5.1
 
 ## Baixar o projeto
 Abrir um terminal, selecionar uma pasta e usar o comando abaixo:
