@@ -83,6 +83,10 @@ Digitando um título de livro ou autor(a) e clicando no botão pesquisar, o resu
 
 ![](/src/resources/tela03.png)
 
-Ao retornar para o menu de Favoritos será possível excluir um título como na imagem abaixo:
+Ao retornar para o menu de Favoritos será listada os favoritos adicionados na pesquisa:
 
 ![](/src/resources/tela04.png)
+
+Os livros poderão ser removidos de seus Favoritos como na imagem abaixo:
+
+![](/src/resources/tela05.png)
