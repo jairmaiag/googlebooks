@@ -27,11 +27,7 @@
 		  	</div>
 		  </div>
 		</nav><br/><br/><br/>
-		<div class="alert alert-danger" role="alert">
-		  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<p>Sua lista de favoritos está vazia.</p>
-			<p>Clique no menu <strong><a href="/pesquisa.html">Pesqusar</a></strong> para adicionar livros aos seus favoritos.</p>
-		</div>
+		<div class="row" id="alertas"></div>
 		<div class="row" id="divLinha"></div>
 	</div>
 	<script type="text/javascript" src="/webjars/jquery/3.1.1/jquery.min.js"></script>
@@ -43,11 +39,15 @@
 				$.ajax({
 					type: "GET",
 					data: '$format=json',
-					url: "/api/favorito",
+					url: "/api/favoritos",
 					dataType: 'json',
 					success: function(data) {
-						console.log('Favorito chamado');
-						console.log(data);
+						if(data.books.length === 0){
+							let alerta = "Sua lista de favoritos está vazia.";
+							alerta+='<p>Clique no menu <strong><a href="/pesquisa.html">Pesqusar</a></strong> para adicionar livros aos seus favoritos.</p>';
+							alertar(alerta);
+							return;
+						}
 					}
 				});
 			};
