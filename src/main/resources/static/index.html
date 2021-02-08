@@ -4,34 +4,31 @@
 <meta charset="UTF-8">
 <title>Estante de livros do google</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css" />
 </head>
 <body>
  	<div class="container">
-	 	<nav class="navbar navbar-default navbar-fixed-top">
-		  <div class="container">
-			<div class="navbar-header">
-			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-			        <span class="sr-only">Toggle navigation</span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			        <span class="icon-bar"></span>
-			      </button>
-			      <a class="navbar-brand" href="/">Leituras</a>
-		    </div>
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			      <ul class="nav navbar-nav">
-			        <li class="active"><a href="/">Favoritos<span class="sr-only">(current)</span></a></li>
-			        <li><a href="/pesquisa.html">Pesquisar</a></li>
-			      </ul>
+	 	<nav class="navbar sticky-top mb-2 navbar-expand-sm navbar-dark bg-dark">
+	 		<a class="navbar-brand" href="/">Leituras</a>
+	 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#barraMenu" aria-controls="barraMenu" aria-expanded="false" aria-label="Toggle navigation">
+    			<span class="navbar-toggler-icon"></span>
+  			</button>
+			<div class="collapse navbar-collapse" id="barraMenu">
+				<ul class="navbar-nav mr-auto">
+				      <li class="nav-item active">
+				        <a class="nav-link" href="/">Favoritos <span class="sr-only">(current)</span></a>
+				      </li>
+				      <li class="nav-item">
+				        <a class="nav-link" href="/pesquisa.html">Pesquisar</a>
+				      </li>
+				</ul>
 		  	</div>
-		  </div>
-		</nav><br/><br/><br/>
-		<div class="row" id="alertas"></div>
+		</nav>
+		<div id="alertas"></div>
 		<div class="row" id="divLinha"></div>
 	</div>
-	<script type="text/javascript" src="/webjars/jquery/3.1.1/jquery.min.js"></script>
-	<script type="text/javascript" src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/webjars/jquery/3.5.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/scripts.js"></script>
 	<script>
 		$(document).ready(function() {
@@ -42,12 +39,25 @@
 					url: "/api/favoritos",
 					dataType: 'json',
 					success: function(data) {
-						if(data.books.length === 0){
+						if(data.length === 0){
 							let alerta = "Sua lista de favoritos está vazia.";
-							alerta+='<p>Clique no menu <strong><a href="/pesquisa.html">Pesqusar</a></strong> para adicionar livros aos seus favoritos.</p>';
+							alerta+='<p>Clique no menu <strong><a href="/pesquisa.html" class="alert-link">Pesqusar</a></strong> para adicionar os livros aos seus favoritos.</p>';
 							alertar(alerta);
 							return;
 						}
+						let total = 0;
+						$.each(data, function(i, livro) {
+							$.ajax({
+								type: "GET",
+								data: '$format=json',
+								url: `https://www.googleapis.com/books/v1/volumes/${livro.idBook}`,
+								dataType: 'json',
+								success: function(data) {
+									$('#divLinha').append(montarLivro(data,true));
+								}
+							});
+							total++;
+						});
 					}
 				});
 			};
