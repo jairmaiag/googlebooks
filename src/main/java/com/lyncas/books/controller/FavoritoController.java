@@ -28,9 +28,21 @@ public class FavoritoController {
 		return this.bookRepository.findAll();
 	}
 
+	@GetMapping(value = "/{idBook}")
+	public Book findByIdBook(@PathVariable("idBook") String idBook) {
+		return this.bookRepository.findByIdBook(idBook);
+	}
+
 	@PostMapping
-	public Book create(@RequestBody Book book) {
-		return this.bookRepository.save(book);
+	public Book create(@RequestBody(required = true) Book book) {
+		Book bookEntity = this.bookRepository.findByIdBook(book.getIdBook());
+		if(bookEntity == null) {
+			return this.bookRepository.save(book);
+		}else {
+			bookEntity.setIdBook("Cadastrado");
+			return bookEntity;
+		}
+		
 	}
 
 	@DeleteMapping(value = "/{idBook}")
