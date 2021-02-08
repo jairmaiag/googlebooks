@@ -34,5 +34,10 @@ public class Book {
 	public void setIdBook(String idBook) {
 		this.idBook = idBook;
 	}
+
+	@Override
+	public String toString() {
+		return "{\"id\":" + id + ", \"idBook\":\"" + idBook + "\"}";
+	}
 		
 }
