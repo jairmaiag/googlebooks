@@ -71,3 +71,4 @@ Utilize um navegador (browser) para utilizar a interface gráfica do sistema, ac
 
 [http://localhost:8080](http://localhost:8080)
 
+![](/src/resources/tela01.png)
