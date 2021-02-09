@@ -70,7 +70,7 @@
 							$.ajax({
 								type: "GET",
 								data: '$format=json',
-								url: `https://www.googleapis.com/books/v1/volumes/${livro.idBook}`,
+								url: `/api/pesquisar/id/${livro.idBook}`,
 								dataType: 'json',
 								success: function(data) {
 									$('#divLinha').append(montarLivro(data,true));
