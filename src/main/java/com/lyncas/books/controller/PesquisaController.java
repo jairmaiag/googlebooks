@@ -28,4 +28,18 @@ public class PesquisaController {
 		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 		return response.body();
 	}
+
+	@RequestMapping(value = "/api/pesquisar/id/{idBook}", method = RequestMethod.GET)
+	String pesquisarPorId(@PathVariable("idBook") String idBook) throws IOException, InterruptedException {
+		if(idBook == null) {
+			return "{mensage:\"Id precisa ser enviado\"}";
+		}
+		HttpClient client = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(Constantes.GOOGLE_API_ID.concat(idBook)))
+				.header("Content-Type", "application/json").build();
+		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+		return response.body();
+	}
+
 }
