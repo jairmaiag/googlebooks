@@ -1,5 +1,5 @@
 function adicionarFavorito(id){
-	let favorito = $.ajax({
+	$.ajax({
 		type: "POST",
 		url:`/api/favoritos`,
 		data: JSON.stringify({idBook : `${id}`}),
